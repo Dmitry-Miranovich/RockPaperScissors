@@ -211,17 +211,23 @@ class Main{
                 this.table = new Table(turns)
                 this.rules = new Rules()
                 isTurnsExist = true
+            }else{
+                console.log("Invalid input")
             }
         }else{
-            console.log("Cannot proceed with small amount of turns. Turns amount: " + turns.length)
+            console.log("Cannot proceed with this amount of turns. Turns amount: " + turns.length)
             isTurnsExist = false
         }
         return isTurnsExist
     }
     #isTurnsCorrect(turns){
+        let copy = turns.slice()
         turns = turns.filter(function(item, pos, self){
             return self.indexOf(item) === pos;
         })
+        if(copy.length !== turns.length){
+            return false
+        }
         let match1 = 0
         let match2 = 0
         turns.forEach(n=>
@@ -234,9 +240,9 @@ class Main{
     }
     static isMatchValid(match1, match2){
         let isValid = false;
-        if(match1 >=turns_example1.length-2 && match2 === 0){
+        if((match1 === turns_example1.length || match1 === turns_example1.length-2) && match2 === 0){
             isValid = true
-        }else if( match2 >= turns_example2.length-2 && match1 ===0){
+        }else if((match2 === turns_example1.length || match2 === turns_example2.length-2) && match1 ===0){
             for(let i = 0; i<turns.length; i++){
                 turns[i] = turns_example1[Number.parseInt(turns[i])-1]
             }
